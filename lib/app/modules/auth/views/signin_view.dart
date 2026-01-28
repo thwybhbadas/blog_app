@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myblog/app/core/utils/app_dimensions.dart';
 import 'package:myblog/app/core/utils/app_text_style.dart';
 import 'package:myblog/app/modules/auth/controllers/auth_controller.dart';
+import 'package:myblog/app/routes/app_pages.dart';
 
 class SigninView extends GetView<AuthController> {
   SigninView({super.key});
@@ -25,16 +26,16 @@ class SigninView extends GetView<AuthController> {
               //
               Text(
                 "Welcome Back",
+
                 // style: TextStyle(
                 //   fontSize: AppDimensions.fontLarge,
                 //   fontWeight: FontWeight.bold,
                 // ),
-
-                 style: AppTextStyles.titleLarge,
+                style: AppTextStyles.titleLarge,
               ),
               //
               SizedBox(height: AppDimensions.screenHeight * 0.05),
-        
+
               // Email
               SizedBox(
                 height: AppDimensions.fieldHeight,
@@ -43,10 +44,10 @@ class SigninView extends GetView<AuthController> {
                   decoration: const InputDecoration(hintText: "Email"),
                 ),
               ),
-        
+
               // const SizedBox(height: 15),
               SizedBox(height: AppDimensions.paddingSmall),
-        
+
               SizedBox(
                 height: AppDimensions.fieldHeight,
                 child: TextField(
@@ -56,38 +57,44 @@ class SigninView extends GetView<AuthController> {
                 ),
               ),
               SizedBox(height: AppDimensions.screenHeight * 0.05),
-        
+
               // const SizedBox(height: 25),
-        
-             // Button
-                SizedBox(
-                  //
-                  height: AppDimensions.buttonHeight,
-                  width: double.infinity,
-                  child: Obx(
-                    () => controller.isLoading.value
-                        ? const Center(child: CircularProgressIndicator())
-                        : ElevatedButton(
-                            onPressed: () {
-                              controller.signIn(
-                                emailController.text.trim(),
-                                passwordController.text.trim(),
-                              );
-                            },
-                            child: Text(
-                              "Sign In",
-                                style: AppTextStyles.button,
-                              // style: TextStyle(
-                              //   //
-                              //   fontSize: AppDimensions.fontMedium,
-                              // ),
-                            ),
+
+              // Button
+              SizedBox(
+                //
+                height: AppDimensions.buttonHeight,
+                width: double.infinity,
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : ElevatedButton(
+                          onPressed: () {
+                            controller.signIn(
+                              emailController.text.trim(),
+                              passwordController.text.trim(),
+                            );
+                          },
+                          child: Text(
+                            "Sign In",
+                            style: AppTextStyles.button,
+                            // style: TextStyle(
+                            //   //
+                            //   fontSize: AppDimensions.fontMedium,
+                            // ),
                           ),
-                  ),
+                        ),
                 ),
-              ],
-            ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.offAndToNamed(Routes.SIGNUP);
+                },
+                child: Text("sign up"),
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

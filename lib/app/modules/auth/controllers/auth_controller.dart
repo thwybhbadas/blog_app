@@ -9,33 +9,42 @@ class AuthController extends GetxController {
   final FirebaseService _firebaseService = FirebaseService();
 
   final isLoading = false.obs;
- 
+
+  // state managment using update & GetBuilder
+  // bool isPasswordHidden = true;
+
+  // void togglePassword() {
+  //   isPasswordHidden = !isPasswordHidden;
+  //   update();
+  // }
+
+  // state management using Rx-obs and obx
+    RxBool isPasswordHidden = true.obs;
+
+  void togglePassword() {
+    //isPasswordHidden.toggle(); 
+    isPasswordHidden.value = !isPasswordHidden.value;
+  }
+
+
   // ---------------- SIGN IN ----------------
   Future<void> signIn(String email, String password) async {
     try {
       isLoading.value = true;
 
-      final credential =
-          await _auth.signInWithEmailAndPassword(
+      final credential = await _auth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
 
       if (!credential.user!.emailVerified) {
-        Get.snackbar(
-          'Email not verified',
-          'Please verify your email first',
-        );
+        Get.snackbar('Email not verified', 'Please verify your email first');
         return;
       }
 
       Get.offAllNamed(Routes.HOME);
-
     } on FirebaseAuthException catch (e) {
-      Get.snackbar(
-        'Login Error',
-        e.message ?? e.code,
-      );
+      Get.snackbar('Login Error', e.message ?? e.code);
     } finally {
       isLoading.value = false;
     }
@@ -129,16 +138,13 @@ class AuthController extends GetxController {
   }
 
   // ---------------- LOGOUT ----------------
-Future<void> logout() async {
-  try {
-    await _auth.signOut();
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
 
-    Get.offAllNamed(Routes.SIGNIN);
-  } catch (e) {
-    Get.snackbar(
-      'Logout Error',
-      e.toString(),
-    );
+      Get.offAllNamed(Routes.SIGNIN);
+    } catch (e) {
+      Get.snackbar('Logout Error', e.toString());
+    }
   }
-}
 }
