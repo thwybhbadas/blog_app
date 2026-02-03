@@ -11,7 +11,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> checkLoginStatus() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds:8));
 
     final user = FirebaseAuth.instance.currentUser;
 

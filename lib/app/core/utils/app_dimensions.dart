@@ -14,7 +14,7 @@ class AppDimensions {
   static double buttonHeight = screenHeight * 0.07;
 
   // Font sizes
-  static double fontSmall = screenWidth * 0.035;
-  static double fontMedium = screenWidth * 0.045;
-  static double fontLarge = screenWidth * 0.06;
+  static double fontSmall = screenWidth * 0.045;
+  static double fontMedium = screenWidth * 0.055;
+  static double fontLarge = screenWidth * 0.09;
 }
