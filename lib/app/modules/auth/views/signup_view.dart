@@ -6,6 +6,8 @@ import 'package:myblog/app/modules/auth/controllers/auth_controller.dart';
 class SignupView extends GetView<AuthController> {
   SignupView({super.key});
   final fullNameController = TextEditingController();
+    final usernameController = TextEditingController();
+
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -20,6 +22,10 @@ class SignupView extends GetView<AuthController> {
             TextField(
               controller: fullNameController,
               decoration: const InputDecoration(labelText: "Full Name"),
+            ),
+             TextField(
+              controller: usernameController,
+              decoration: const InputDecoration(labelText: "User Name"),
             ),
             TextField(
               controller: phoneController,
@@ -50,6 +56,7 @@ class SignupView extends GetView<AuthController> {
             // ),
             Obx(
               () => TextField(
+                controller: passwordController,
                 obscureText: controller.isPasswordHidden.value,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
@@ -79,6 +86,7 @@ class SignupView extends GetView<AuthController> {
                       onPressed: () {
                         controller.signUp(
                           fullNameController.text,
+                          usernameController.text,
                           phoneController.text,
                           emailController.text,
                           passwordController.text,

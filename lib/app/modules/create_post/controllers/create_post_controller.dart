@@ -4,9 +4,7 @@ import 'package:myblog/app/data/services/firebase_services.dart';
 
 class CreatePostController extends GetxController {
   //TODO: Implement CreatePostController
-
- final FirebaseService _service = FirebaseService();
-
+final FirebaseService _service = FirebaseService();
   final isLoading = false.obs;
 
   Future<void> createPost(String content) async {
@@ -14,21 +12,10 @@ class CreatePostController extends GetxController {
 
     try {
       isLoading.value = true;
-
-      final post = PostModel(
-        postId: '',
-        userId: 'currentUserId',
-        userName: 'User Name',
-        content: content,
-        createdAt: DateTime.now(),
-        likesCount: 0,
-        commentsCount: 0,
-      );
-
-      await _service.createPost(post);
-
-      Get.back(); // يرجع للهوم
-
+      await _service.createPost(content.trim());
+      Get.back();
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
     } finally {
       isLoading.value = false;
     }

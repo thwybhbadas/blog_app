@@ -19,13 +19,12 @@ class AuthController extends GetxController {
   // }
 
   // state management using Rx-obs and obx
-    RxBool isPasswordHidden = true.obs;
+  RxBool isPasswordHidden = true.obs;
 
   void togglePassword() {
-    //isPasswordHidden.toggle(); 
+    //isPasswordHidden.toggle();
     isPasswordHidden.value = !isPasswordHidden.value;
   }
-
 
   // ---------------- SIGN IN ----------------
   Future<void> signIn(String email, String password) async {
@@ -97,6 +96,7 @@ class AuthController extends GetxController {
   // ---------------- SIGN UP ----------------
   Future<void> signUp(
     String fullName,
+    String username,
     String phone,
     String email,
     String password,
@@ -106,10 +106,24 @@ class AuthController extends GetxController {
       Get.snackbar('Invalid Email', 'Please enter a valid email address');
       return;
     }
+    if (username.trim().isEmpty) {
+      Get.snackbar('Invalid username', 'username is required');
+      return;
+    }
 
     try {
       isLoading.value = true;
 
+      //  تحقق من توفر username
+      final isAvailable = await _firebaseService.isusernameAvailable(username);
+
+      if (!isAvailable) {
+         isLoading.value = false;
+        Get.snackbar('username Taken', 'This username is already in use');
+        return;
+      }
+
+      // إنشاء الحساب
       final credential = await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
@@ -120,6 +134,7 @@ class AuthController extends GetxController {
       final user = UserModel(
         uid: credential.user!.uid,
         fullName: fullName.trim(),
+        username: username.trim(),
         phone: phone.trim(),
         email: email.trim(),
         isEmailVerified: false,
