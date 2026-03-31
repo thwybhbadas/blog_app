@@ -10,15 +10,26 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ProfileView'),
+        title:  Text('profileView'.tr),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+  onPressed: () {
+    Get.updateLocale(Locale('ar'));
+  },
+  child: Text("Arabic"),
+),
+
+ElevatedButton(
+  onPressed: () {
+    Get.updateLocale(Locale('en'));
+  },
+  child: Text("English"),
+),
+        ],
+      )
     );
   }
 }

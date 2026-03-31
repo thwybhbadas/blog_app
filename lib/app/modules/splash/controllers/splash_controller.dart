@@ -16,7 +16,7 @@ class SplashController extends GetxController {
     final user = FirebaseAuth.instance.currentUser;
 
 if (user != null && user.emailVerified) {
-  Get.offAllNamed(Routes.HOME);
+  Get.offAllNamed(Routes.PROFILE);
 } else {
   Get.offAllNamed(Routes.SIGNIN);
 }
